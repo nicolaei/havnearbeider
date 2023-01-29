@@ -1,23 +1,10 @@
 package runtime
 
 import (
-	"fmt"
-	"github.com/mholt/archiver/v3"
 	"os"
 	"os/exec"
 	"syscall"
 )
-
-func getFilesystem(image string) string {
-	basePath := "/home/nicolas/projects/container-runtime"
-
-	imagePath := fmt.Sprintf("%s/images/%s.tar", basePath, image)
-	extractPath := fmt.Sprintf("%s/filesystems/%s", basePath, image)
-
-	must(archiver.Unarchive(imagePath, extractPath))
-
-	return extractPath
-}
 
 func mountFilesystem(path string) func() {
 	exit, err := chroot(path)
@@ -41,8 +28,8 @@ func newProcessSpace() func() {
 	return func() { must(syscall.Unmount("proc", 0)) }
 }
 
-func runCommand() {
-	cmd := exec.Command(os.Args[3], os.Args[4:]...)
+func runCommand(command []string) {
+	cmd := exec.Command(command[0], command[1:]...)
 	cmd.Env = append(cmd.Env, "PATH=/bin:/usr/bin")
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout

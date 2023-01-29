@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/nicolaei/container-runtime/internal/image"
 	"github.com/nicolaei/container-runtime/internal/runtime"
 	"os"
 )
@@ -9,20 +10,20 @@ import (
 func main() {
 	switch os.Args[1] {
 	case "__run__":
-		container := runtime.Container{
-			Image:   os.Args[2],
+		container := runtime.RunningContainer{
+			Image:   image.LoadedImageFromName(os.Args[2]),
 			Command: os.Args[3:],
 		}
 
 		container.Run()
 	case "kjør":
 		container := runtime.Container{
-			Image:   os.Args[2],
+			Image:   image.ArchivedImage{Name: os.Args[2]},
 			Command: os.Args[3:],
 		}
 		container.Create()
 	case "bygg":
-		buildContainer()
+		panic("Not Implemented")
 	default:
 		panic("invalid argument")
 	}
