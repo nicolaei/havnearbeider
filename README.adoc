@@ -1,0 +1,13 @@
+= Homebrew Container
+
+A simple implementation of the docker interface, but in norwegian!
+
+== About
+
+This project was created to accompany a presentation about how docker works.
+It's a really simple implementation of the core parts of docker:
+
+* Runtime
+* Images
+* Building
+
