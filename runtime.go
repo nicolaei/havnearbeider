@@ -9,12 +9,14 @@ import (
 )
 
 func getFilesystem(image string) string {
-	basePath := "/home/nicolas/projects/container-runtime/filesystems"
+	basePath := "/home/nicolas/projects/container-runtime"
 
-	imageBase := fmt.Sprintf("%s/%s", basePath, image)
-	must(archiver.Unarchive(fmt.Sprintf("%s.tar", imageBase), imageBase))
+	imagePath := fmt.Sprintf("%s/images/%s.tar", basePath, image)
+	extractPath := fmt.Sprintf("%s/filesystems/%s", basePath, image)
 
-	return imageBase
+	must(archiver.Unarchive(imagePath, extractPath))
+
+	return extractPath
 }
 
 func mountFilesystem(path string) func() {
