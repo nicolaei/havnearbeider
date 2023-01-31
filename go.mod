@@ -1,4 +1,4 @@
-module github.com/nicolaei/container-runtime
+module github.com/nicolaei/havnearbeider
 
 go 1.19
 

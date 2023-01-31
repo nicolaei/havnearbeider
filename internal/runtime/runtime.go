@@ -2,7 +2,7 @@ package runtime
 
 import (
 	"fmt"
-	"github.com/nicolaei/container-runtime/internal/image"
+	"github.com/nicolaei/havnearbeider/internal/image"
 	"os"
 	"os/exec"
 	"syscall"
@@ -34,9 +34,15 @@ type Container struct {
 }
 
 // Create creates the container by creating a new namespace and attaching CGroups.
-func (c Container) Create() {
-	c.Image.Load()
+func (c Container) Create() image.LoadedImage {
+	loadedImage := c.Image.Load()
 
+	c.Run()
+
+	return loadedImage
+}
+
+func (c Container) Run() {
 	cmd := exec.Command("/proc/self/exe", append([]string{"__run__", c.Image.Name}, c.Command...)...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
