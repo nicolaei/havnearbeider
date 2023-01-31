@@ -28,6 +28,7 @@ func (s Spec) Build() image.ArchivedImage {
 
 	// TODO: This could probably be redone better by having a `CopyArchiveImage` function
 	finalImage := builtLayer.LoadToPath("build/final")
+	finalImage.Name = s.Name
 	return finalImage.Package()
 }
 

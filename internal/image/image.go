@@ -65,8 +65,6 @@ func LoadedImageFromName(name string) LoadedImage {
 }
 
 func (i LoadedImage) Package() ArchivedImage {
-	// path := fmt.Sprintf("%s/%s.tar", imageBasePath, i.Name)
-
 	return i.PackageToPath(imageBasePath)
 }
 
